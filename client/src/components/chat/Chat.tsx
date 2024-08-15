@@ -9,9 +9,14 @@ export default function Chat() {
     Array<{ message: string; isMine: boolean; key: string }>
   >([]);
 
+  const urlParams = new URLSearchParams(window.location.search);
+
   const onSend = async (s: string) => {
     addLog(s, true);
-    const newMessage = await API.completeChat(s);
+    const newMessage = await API.completeChat(
+      s,
+      urlParams.get("llm") as string
+    );
     addLog(newMessage, false);
   };
 
@@ -23,6 +28,10 @@ export default function Chat() {
 
   return (
     <div className="root-chat">
+      <div>
+        <h1>Using {urlParams.get("llm")}</h1>
+        <p>auto translate: {urlParams.get("translate")}</p>
+      </div>
       <MessageLogs logs={logs}></MessageLogs>
       <ChatInput onSend={onSend}></ChatInput>
     </div>

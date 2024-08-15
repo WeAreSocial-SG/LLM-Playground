@@ -3,8 +3,8 @@ function getHistory() {
     const messages = [];
     for (let index = 0; index < chatLogs.length; index++) {
         const element = chatLogs[index];
-        console.log(element.classList)
-        if (index % 2 === 0) {
+        const classes = element.classList.value;
+        if (classes.includes("isMine")) {
             messages.push({
                 content: element.innerHTML,
                 role: "assistant",
@@ -16,40 +16,27 @@ function getHistory() {
             });
         }
     }
+    console.log(messages)
     return messages;
 }
 
 export default class API {
-    static baseUrl = "http://localhost:1337/v1";
-    static async completeChat(payload = "") {
-        const historyMesssages = getHistory();
+    static baseUrl = "http://localhost:3000/chat";
+    static async completeChat(payload: string, llm: string) {
+        const messages = [
+            ...getHistory(),
+            { role: "user", content: payload }
+        ]
         const body = {
-            messages: [
-                {
-                    content: "You are a helpful assistant.",
-                    role: "system",
-                },
-                ...historyMesssages,
-                {
-                    content: payload,
-                    role: "user",
-                },
-            ],
-            model: "gpt-4o",
-            stream: false,
-            max_tokens: 2048,
-            stop: ["hello"],
-            frequency_penalty: 0,
-            presence_penalty: 0,
-            temperature: 0.7,
-            top_p: 0.95,
-        };
-        const response = await fetch(`${API.baseUrl}/chat/completions`, {
+            llm: llm,
+            messages: messages
+        }
+        const response = await fetch(`${API.baseUrl}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         });
         const responseJson = await response.json();
-        return responseJson.choices[0].message.content;
+        return responseJson.reply;
     }
 }

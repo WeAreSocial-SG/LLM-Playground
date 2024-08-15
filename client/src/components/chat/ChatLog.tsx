@@ -16,12 +16,14 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
     speak(props.message);
   };
 
+  const classes = props.isMine ? "isMine" : "isOther";
+
   return (
     <div className="root-chat-log" style={rootStyle}>
       <button className="interactive" onClick={onSpeakerClicked}>
         🔊
       </button>
-      <div className="chat-log" style={chatStyle}>
+      <div className={`chat-log ${classes}`} style={chatStyle}>
         {props.message}
       </div>
     </div>

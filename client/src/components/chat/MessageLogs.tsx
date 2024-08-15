@@ -8,11 +8,13 @@ interface MessageLogsProps {
 export default function MessageLogs(props: MessageLogsProps) {
   const mark = useRef<HTMLDivElement>(null);
   const div = useRef<HTMLDivElement>(null);
-  //   useEffect(() => {
-  //     if (div.current && mark.current) {
-  //       div.current.scrollTo(mark.current);
-  //     }
-  //   }, [div, mark]);
+
+  useEffect(() => {
+    if (mark.current) {
+      mark.current.scrollIntoView();
+    }
+  }, [props.logs]);
+
   return (
     <div className="message-logs" ref={div}>
       {props.logs.map((log) => {
@@ -24,7 +26,7 @@ export default function MessageLogs(props: MessageLogsProps) {
           ></ChatLog>
         );
       })}
-      <div ref={mark}></div>
+      <div className="mark" ref={mark}></div>
     </div>
   );
 }

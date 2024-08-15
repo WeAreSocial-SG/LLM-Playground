@@ -2,9 +2,13 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import constants from './src/constants.js';
 import { groqComplete, openAIComplete, typhoonComplete } from './src/LLM_APIs.js';
+import cors from 'cors';
 
 const expressApp = express()
 expressApp.use(bodyParser.json())
+expressApp.use(cors({
+    origin: '*'// put urls you want here
+}));
 
 expressApp.post("/chat", async (req, res) => {
     try {
