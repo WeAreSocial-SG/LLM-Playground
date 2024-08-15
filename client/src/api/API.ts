@@ -16,7 +16,6 @@ function getHistory() {
             });
         }
     }
-    console.log(messages)
     return messages;
 }
 
