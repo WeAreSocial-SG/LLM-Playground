@@ -3,6 +3,9 @@ import bodyParser from 'body-parser';
 import constants from './src/constants.js';
 import { groqComplete, openAIComplete, typhoonComplete } from './src/LLM_APIs.js';
 import cors from 'cors';
+import * as googleTranslate from '@iamtraction/google-translate';
+
+const translate = googleTranslate.default;
 
 const expressApp = express()
 expressApp.use(bodyParser.json())
@@ -31,15 +34,21 @@ expressApp.post("/chat", async (req, res) => {
                 break;
         }
     } catch (e) {
+        console.log(e)
+        res.json({ status: "error", message: e })
+    }
+})
+
+expressApp.post("/translate", async (req, res) => {
+    try {
+        const jsonBody = req.body;
+        const translation = await translate(jsonBody.text, { to: jsonBody.to });
+        res.json({ text: translation.text })
+    } catch (e) {
+        console.log(e)
         res.json({ status: "error", message: e })
     }
 })
 
 expressApp.listen(constants.expressPort, () => { console.log(`express started on port ${constants.expressPort}`) });
 
-(async () => {
-    // const messages = [
-    //     { role: "user", content: "what up dog" }
-    // ]
-    // console.log(await groqComplete(messages))
-})()

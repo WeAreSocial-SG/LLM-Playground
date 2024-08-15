@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  overflow-x: clip;
 }
 
 html,
@@ -11,6 +12,10 @@ body,
   height: 100%;
   width: 100%;
   background-color: #bfdbff;
+}
+
+.root {
+  padding: 0rem 1rem;
 }
 
 .root-chat {
@@ -77,4 +82,42 @@ body,
   width: 20rem;
   padding: 1rem;
   border-radius: 1rem;
+}
+
+/* For WebKit browsers (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+  width: 3px; /* Width of the scrollbar */
+  height: 3px; /* Height for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Background of the scrollbar track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar handle */
+  border-radius: 1.5px; /* Roundness of the scrollbar handle */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.5); /* Handle color on hover */
+}
+
+::-webkit-scrollbar-button {
+  display: none; /* Hide the scrollbar buttons */
+}
+
+/* For Firefox */
+html {
+  scrollbar-width: thin; /* Makes the scrollbar thin */
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent; /* Handle and track color */
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3); /* Color of the scrollbar handle */
+  border-radius: 1.5px; /* Roundness of the scrollbar handle */
+}
+
+html::-webkit-scrollbar-button {
+  display: none; /* Hide the scrollbar buttons */
 }

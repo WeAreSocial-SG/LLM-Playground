@@ -1,5 +1,6 @@
 import React from "react";
 import { speak } from "../../api/textToSpeech";
+import API from "../../api/API";
 
 export default function ChatLog(props: { isMine: boolean; message: string }) {
   const rootStyle: React.CSSProperties = {
@@ -12,16 +13,17 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
     // textAlign: props.isMine ? "right" : "left",
   };
 
-  const onSpeakerClicked = () => {
-    speak(props.message);
+  const onTranslateClicked = async () => {
+    const res = await API.translate({ text: props.message, to: "en" });
+    alert(res);
   };
 
   const classes = props.isMine ? "isMine" : "isOther";
 
   return (
     <div className="root-chat-log" style={rootStyle}>
-      <button className="interactive" onClick={onSpeakerClicked}>
-        🔊
+      <button className="interactive" onClick={onTranslateClicked}>
+        🌐
       </button>
       <div className={`chat-log ${classes}`} style={chatStyle}>
         {props.message}

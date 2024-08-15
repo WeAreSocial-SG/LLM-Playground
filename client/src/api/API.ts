@@ -21,7 +21,7 @@ function getHistory() {
 }
 
 export default class API {
-    static baseUrl = "http://localhost:3000/chat";
+    static baseUrl = "http://localhost:3000";
     static async completeChat(payload: string, llm: string) {
         const messages = [
             ...getHistory(),
@@ -31,12 +31,24 @@ export default class API {
             llm: llm,
             messages: messages
         }
-        const response = await fetch(`${API.baseUrl}`, {
+        const response = await fetch(`${API.baseUrl}/chat`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(body),
         });
         const responseJson = await response.json();
         return responseJson.reply;
+    }
+    static async translate(payload: { text: string, to: string }) {
+        const response = await fetch(`${API.baseUrl}/translate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                to: payload.to,
+                text: payload.text
+            }),
+        });
+        const responseJson = await response.json();
+        return responseJson.text
     }
 }

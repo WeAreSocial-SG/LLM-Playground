@@ -11,10 +11,14 @@ export default function Chat() {
 
   const urlParams = new URLSearchParams(window.location.search);
 
-  const onSend = async (s: string) => {
-    addLog(s, true);
+  const onSend = async (s: string, translate = false) => {
+    let msg = s;
+    if (translate) {
+      msg = await API.translate({ text: s, to: "th" });
+    }
+    addLog(msg, true);
     const newMessage = await API.completeChat(
-      s,
+      msg,
       urlParams.get("llm") as string
     );
     addLog(newMessage, false);
@@ -30,7 +34,6 @@ export default function Chat() {
     <div className="root-chat">
       <div>
         <h1>Using {urlParams.get("llm")}</h1>
-        <p>auto translate: {urlParams.get("translate")}</p>
       </div>
       <MessageLogs logs={logs}></MessageLogs>
       <ChatInput onSend={onSend}></ChatInput>
