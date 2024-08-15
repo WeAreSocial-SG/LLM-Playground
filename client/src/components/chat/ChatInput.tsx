@@ -1,21 +1,26 @@
-import { KeyboardEvent, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 
 export default function ChatInput(props: {
   onSend: (s: string, translate?: boolean) => void;
+  queryInProgress: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const internal_onButtonClick = () => {
+    console.log("query in progress", props.queryInProgress);
     const value = inputRef.current!.value;
     inputRef.current!.value = "";
-    if (value !== "") {
+    if (value !== "" && !props.queryInProgress) {
+      console.log("query in progress", props.queryInProgress);
       props.onSend(value);
     }
   };
 
   const sendAndTranslate = () => {
+    console.log("query in progress", props.queryInProgress);
     const value = inputRef.current!.value;
     inputRef.current!.value = "";
-    if (value !== "") {
+    if (value !== "" && !props.queryInProgress) {
+      console.log("query in progress", props.queryInProgress);
       props.onSend(value, true);
     }
   };
@@ -34,19 +39,32 @@ export default function ChatInput(props: {
         inputRef.current.removeEventListener("keydown", keydown);
       }
     };
-  }, [inputRef.current]);
+  }, [inputRef.current, props.queryInProgress]);
 
   return (
     <div className="chat-input">
       <input
         type="text"
-        placeholder="type your message here..."
+        disabled={props.queryInProgress}
+        placeholder={
+          props.queryInProgress
+            ? "Query in progress"
+            : "type your message here..."
+        }
         ref={inputRef}
       />
-      <button className="interactive" onClick={internal_onButtonClick}>
+      <button
+        className="interactive"
+        onClick={internal_onButtonClick}
+        disabled={props.queryInProgress}
+      >
         send
       </button>
-      <button className="interactive" onClick={sendAndTranslate}>
+      <button
+        className="interactive"
+        onClick={sendAndTranslate}
+        disabled={props.queryInProgress}
+      >
         Send in thai
       </button>
     </div>
