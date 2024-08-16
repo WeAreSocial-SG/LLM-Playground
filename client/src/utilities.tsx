@@ -11,7 +11,3 @@ export function generateRandomString(length = 10): string {
 
   return result;
 }
-
-export async function soundOff(dialogue: string) {
-  //
-}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChatInput from "./ChatInput";
 import MessageLogs from "./MessageLogs";
 import { generateRandomString } from "../../utilities";

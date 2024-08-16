@@ -1,5 +1,4 @@
 import React from "react";
-import { speak } from "../../api/textToSpeech";
 import API from "../../api/API";
 
 export default function ChatLog(props: { isMine: boolean; message: string }) {
