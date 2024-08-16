@@ -13,6 +13,8 @@ expressApp.use(cors({
     origin: '*'// put urls you want here
 }));
 
+app.use(express.static('public'))
+
 expressApp.post("/chat", async (req, res) => {
     try {
         const jsonBody = req.body;
