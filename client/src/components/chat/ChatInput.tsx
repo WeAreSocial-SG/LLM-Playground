@@ -6,7 +6,6 @@ export default function ChatInput(props: {
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const internal_onButtonClick = () => {
-    console.log("query in progress", props.queryInProgress);
     const value = inputRef.current!.value;
     inputRef.current!.value = "";
     if (value !== "" && !props.queryInProgress) {
@@ -15,8 +14,10 @@ export default function ChatInput(props: {
     }
   };
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const shouldTranslate = urlParams.get("translate") === "true";
+
   const sendAndTranslate = () => {
-    console.log("query in progress", props.queryInProgress);
     const value = inputRef.current!.value;
     inputRef.current!.value = "";
     if (value !== "" && !props.queryInProgress) {
@@ -60,13 +61,15 @@ export default function ChatInput(props: {
       >
         send
       </button>
-      <button
-        className="interactive"
-        onClick={sendAndTranslate}
-        disabled={props.queryInProgress}
-      >
-        Send in thai
-      </button>
+      {shouldTranslate ? (
+        <button
+          className="interactive"
+          onClick={sendAndTranslate}
+          disabled={props.queryInProgress}
+        >
+          Send in thai
+        </button>
+      ) : null}
     </div>
   );
 }

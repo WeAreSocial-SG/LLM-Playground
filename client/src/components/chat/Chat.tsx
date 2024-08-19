@@ -37,6 +37,12 @@ export default function Chat() {
     <div className="root-chat">
       <div>
         <h1>Using {urlParams.get("llm")}</h1>
+        <li>
+          <a href="/?llm=groq-llama3">Click here to for Llama3</a>
+        </li>
+        <li>
+          <a href="/?llm=open-ai">Click here to for Open-AI</a>
+        </li>
       </div>
       <MessageLogs logs={logs}></MessageLogs>
       <ChatInput onSend={onSend} queryInProgress={queryInProgess}></ChatInput>

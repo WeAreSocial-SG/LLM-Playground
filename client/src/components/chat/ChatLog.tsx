@@ -6,6 +6,9 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
     justifyContent: props.isMine ? "flex-end" : "flex-start",
   };
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const shouldTranslate = urlParams.get("translate") === "true";
+
   const chatStyle: React.CSSProperties = {
     background: props.isMine ? "#338bff" : "#fff",
     color: props.isMine ? "#fff" : "#000",
@@ -21,9 +24,11 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
 
   return (
     <div className="root-chat-log" style={rootStyle}>
-      <button className="interactive" onClick={onTranslateClicked}>
-        🌐
-      </button>
+      {shouldTranslate ? (
+        <button className="interactive" onClick={onTranslateClicked}>
+          🌐
+        </button>
+      ) : null}
       <div className={`chat-log ${classes}`} style={chatStyle}>
         {props.message}
       </div>
