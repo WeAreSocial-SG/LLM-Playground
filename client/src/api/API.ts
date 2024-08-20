@@ -21,12 +21,14 @@ function getHistory() {
 
 export default class API {
   static baseUrl = "http://18.143.103.236:3030";
+  //   static baseUrl = "http://localhost:3000";
   static async completeChat(payload: string, llm: string) {
     const messages = [
       {
         role: "system",
-        content:
-          "You are a helpful assistant and who only speaks in the thai language.",
+        content: `
+           You are a helpful assistant and who only speaks in the thai language implemented in thailand. Don't speak in english at all. Don't use english letters. Dont speak in any other language
+          `,
       },
       ...getHistory(),
       { role: "user", content: payload },
