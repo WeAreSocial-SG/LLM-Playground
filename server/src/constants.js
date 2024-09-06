@@ -6,7 +6,7 @@ const constants = {
   groqKey: process.env.GROQ_KEY,
   ngrokUrl: process.env.NGROK_URL,
   typhoonKey: process.env.TYPHOON_KEY,
-  expressPort: 3000,
+  expressPort: 3030,
 };
 
 export default constants;
