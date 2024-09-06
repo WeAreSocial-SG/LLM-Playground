@@ -1,3 +1,4 @@
+console.clear();
 import express from "express";
 import bodyParser from "body-parser";
 import constants from "./src/constants.js";

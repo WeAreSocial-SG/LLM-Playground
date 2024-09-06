@@ -31,21 +31,26 @@ export async function groqComplete(messages) {
 
 export async function typhoonComplete(messages) {
   console.log("typhoon request made");
-  const res = await fetch(`${constants.ngrokUrl}/v1/chat/completions`, {
+  const res = await fetch(`https://api.opentyphoon.ai/v1/chat/completions`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${constants.typhoonKey}`,
     },
     body: JSON.stringify({
       messages: messages,
-      model: "llama-3-typhoon-v1.5-8b-instruct.Q4_K_M",
+      model: "typhoon-v1.5-instruct",
       stream: false,
-      max_tokens: 2048,
       stop: ["hello"],
       frequency_penalty: 0,
       presence_penalty: 0,
       temperature: 0.7,
       top_p: 0.95,
+      //   max_tokens: 512,
+      //   temperature: 0.6,
+      //   top_p: 0.95,
+      //   repetition_penalty: 1.05,
+      //   stream: false,
     }),
   });
   const resJson = await res.json();
@@ -55,3 +60,16 @@ export async function typhoonComplete(messages) {
   console.log("reply", reply);
   return reply;
 }
+
+// const testMessages = [
+//   {
+//     role: "system",
+//     content: "You are a helpful assistant. You must answer only in Thai.",
+//   },
+//   {
+//     role: "user",
+//     content: "ขอสูตรไก่ย่าง",
+//   },
+// ];
+
+// typhoonComplete(testMessages);

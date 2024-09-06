@@ -43,6 +43,9 @@ export default function Chat() {
         <li>
           <a href="/?llm=open-ai">Click here to for Open-AI</a>
         </li>
+        <li>
+          <a href="/?llm=typhoon">Click here to for typhoon</a>
+        </li>
       </div>
       <MessageLogs logs={logs}></MessageLogs>
       <ChatInput onSend={onSend} queryInProgress={queryInProgess}></ChatInput>
