@@ -6,6 +6,7 @@ const constants = {
   groqKey: process.env.GROQ_KEY,
   ngrokUrl: process.env.NGROK_URL,
   typhoonKey: process.env.TYPHOON_KEY,
+  narakeetApiKey: process.env.NARAKEET_API_KEY,
   expressPort: 3030,
 };
 

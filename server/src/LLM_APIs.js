@@ -13,7 +13,7 @@ const groq = new Groq({
 export async function openAIComplete(messages) {
   const chatCompletion = await openAi.chat.completions.create({
     messages: messages,
-    model: "gpt-3.5-turbo",
+    model: "gpt-4o",
   });
   const reply = chatCompletion.choices[0].message;
   return reply.content;
@@ -30,7 +30,6 @@ export async function groqComplete(messages) {
 }
 
 export async function typhoonComplete(messages) {
-  console.log("typhoon request made");
   const res = await fetch(`https://api.opentyphoon.ai/v1/chat/completions`, {
     method: "POST",
     headers: {
@@ -46,20 +45,40 @@ export async function typhoonComplete(messages) {
       presence_penalty: 0,
       temperature: 0.7,
       top_p: 0.95,
-      //   max_tokens: 512,
-      //   temperature: 0.6,
-      //   top_p: 0.95,
-      //   repetition_penalty: 1.05,
-      //   stream: false,
     }),
   });
   const resJson = await res.json();
-  console.log(resJson);
-  console.log("got typhoon ");
   const reply = resJson.choices[0].message.content;
-  console.log("reply", reply);
   return reply;
 }
+
+export async function GPTAndTyphoon(messages) {
+  // get completion from gpt
+  const GPTChatCompletion = await openAi.chat.completions.create({
+    messages: messages,
+    model: "gpt-4o",
+  });
+  const gptReply = GPTChatCompletion.choices[0].message.content;
+  // get completion from typhoon
+  const typhoonHistory = [
+    {
+      role: "system",
+      content: "You are a helpful thai Assistant. You help to take translated thai text and make them sound more natural and human. Use thai slangs if appropriate",
+    },
+    {
+      role: "user",
+      content: `Please return this text more naturally: ${gptReply}`,
+    },
+  ];
+  const typhoonCompletion = await typhoonComplete(typhoonHistory)
+  // return the final reply
+  return typhoonCompletion
+}
+
+
+
+
+// ! --- testing  stuff below
 
 // const testMessages = [
 //   {
@@ -72,4 +91,8 @@ export async function typhoonComplete(messages) {
 //   },
 // ];
 
-// typhoonComplete(testMessages);
+// (async ()=>{
+//   const res = await GPTAndTyphoon(testMessages)
+//   // console.log(res)
+// })();
+

@@ -1,8 +1,10 @@
 console.clear();
+import createNarakeetAudio from "./src/narakeet.js";
 import express from "express";
 import bodyParser from "body-parser";
 import constants from "./src/constants.js";
 import {
+  GPTAndTyphoon,
   groqComplete,
   openAIComplete,
   typhoonComplete,
@@ -38,6 +40,11 @@ expressApp.post("/chat", async (req, res) => {
         const typhoonReply = await typhoonComplete(jsonBody.messages);
         res.json({ status: "ok", reply: typhoonReply });
         break;
+      case "GPTAndTyphoon":
+        console.log('got gptyph')
+        const gptAndTyphoonReply = await GPTAndTyphoon(jsonBody.messages);
+        res.json({ status: "ok", reply: gptAndTyphoonReply });
+        break;
       default:
         res.json({ status: "error", message: "no such llm supported" });
         break;
@@ -59,6 +66,20 @@ expressApp.post("/translate", async (req, res) => {
   }
 });
 
+// expressApp.post('/tts', async (req, res)=>{
+//   try {
+//     // get text 
+//     // process to narakeet
+//     // const jsonBody = req.body;
+//     // const translation = await translate(jsonBody.text, { to: jsonBody.to });
+//     // res.json({ text: translation.text });
+//   } catch (e) {
+//     console.log(e);
+//     res.json({ status: "error", message: e });
+//   }
+// })
+
 expressApp.listen(constants.expressPort, () => {
   console.log(`express started on port ${constants.expressPort}`);
+  createNarakeetAudio('ขอสูตรไก่ย่าง');//!testing
 });

@@ -20,8 +20,8 @@ function getHistory() {
 }
 
 export default class API {
-  static baseUrl = "http://18.143.103.236:3030";
-  //   static baseUrl = "http://localhost:3000";
+  // static baseUrl = "http://18.143.103.236:3030";
+    static baseUrl = "http://localhost:3030";
   static async completeChat(payload: string, llm: string) {
     const messages = [
       {
