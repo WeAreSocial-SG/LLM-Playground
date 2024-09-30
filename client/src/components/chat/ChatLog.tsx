@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import API from "../../api/API";
 
 export default function ChatLog(props: { isMine: boolean; message: string }) {
@@ -8,6 +9,8 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
 
   const urlParams = new URLSearchParams(window.location.search);
   const shouldTranslate = urlParams.get("translate") === "true";
+
+  const [audioLoading, setAudioLoading] = useState(false)
 
   const chatStyle: React.CSSProperties = {
     background: props.isMine ? "#338bff" : "#fff",
@@ -21,11 +24,11 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
   };
 
   const onSpeakerClicked = async ()=>{
-    console.log('clicked')
+    console.log("ddd")
+    setAudioLoading(true)
     const res = await API.getAudioUrl(props.message);
-    console.log('got audio', res)
     const audioPlayer = new Audio(res);
-    console.log("playing audio")
+    setAudioLoading(false)
     audioPlayer.play()
   }
 
@@ -33,8 +36,8 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
 
   return (
     <div className="root-chat-log" style={rootStyle}>
-      <button className="interactive" onClick={onSpeakerClicked}>
-        🔊
+      <button className="interactive" onClick={onSpeakerClicked} disabled={audioLoading}>
+        {audioLoading ? "⌛":"🔊"}
       </button>
       {shouldTranslate ? (
         <button className="interactive" onClick={onTranslateClicked}>
