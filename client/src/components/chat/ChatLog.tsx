@@ -15,7 +15,6 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
   const chatStyle: React.CSSProperties = {
     background: props.isMine ? "#338bff" : "#fff",
     color: props.isMine ? "#fff" : "#000",
-    // textAlign: props.isMine ? "right" : "left",
   };
 
   const onTranslateClicked = async () => {

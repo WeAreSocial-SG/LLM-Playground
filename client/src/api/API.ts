@@ -1,3 +1,5 @@
+import { generateRandomString } from "../utilities";
+
 function getHistory() {
   const chatLogs = document.querySelectorAll(".chat-log");
   const messages = [];
@@ -20,8 +22,8 @@ function getHistory() {
 }
 
 export default class API {
-  static baseUrl = "http://18.143.103.236:3030";
-    // static baseUrl = "http://localhost:3030";
+  // static baseUrl = "http://18.143.103.236:3030";
+    static baseUrl = "http://localhost:3030";
   static async completeChat(payload: string, llm: string) {
     const messages = [
       {
@@ -66,6 +68,6 @@ export default class API {
       }),
     });
     const responseJson = await response.json();
-    return `${API.baseUrl}/${responseJson.audioUrl}`;
+    return `${API.baseUrl}/${responseJson.audioUrl}?makeUnique=${generateRandomString(10)}`;
   }
 }
