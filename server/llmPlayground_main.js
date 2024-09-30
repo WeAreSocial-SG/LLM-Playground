@@ -66,20 +66,20 @@ expressApp.post("/translate", async (req, res) => {
   }
 });
 
-// expressApp.post('/tts', async (req, res)=>{
-//   try {
-//     // get text 
-//     // process to narakeet
-//     // const jsonBody = req.body;
-//     // const translation = await translate(jsonBody.text, { to: jsonBody.to });
-//     // res.json({ text: translation.text });
-//   } catch (e) {
-//     console.log(e);
-//     res.json({ status: "error", message: e });
-//   }
-// })
+expressApp.post('/tts', async (req, res)=>{
+  try {
+    // get text 
+    const jsonBody = req.body;
+    const text = jsonBody.text
+    // process to narakeet
+    const fileName = await createNarakeetAudio(text)
+    res.json({ status: "ok", audioUrl: fileName});
+  } catch (e) {
+    console.log(e);
+    res.json({ status: "error", message: e });
+  }
+})
 
-expressApp.listen(constants.expressPort, () => {
+expressApp.listen(constants.expressPort, async () => {
   console.log(`express started on port ${constants.expressPort}`);
-  createNarakeetAudio('ขอสูตรไก่ย่าง');//!testing
 });

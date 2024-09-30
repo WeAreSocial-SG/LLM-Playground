@@ -20,10 +20,22 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
     alert(res);
   };
 
+  const onSpeakerClicked = async ()=>{
+    console.log('clicked')
+    const res = await API.getAudioUrl(props.message);
+    console.log('got audio', res)
+    const audioPlayer = new Audio(res);
+    console.log("playing audio")
+    audioPlayer.play()
+  }
+
   const classes = props.isMine ? "isMine" : "isOther";
 
   return (
     <div className="root-chat-log" style={rootStyle}>
+      <button className="interactive" onClick={onSpeakerClicked}>
+        🔊
+      </button>
       {shouldTranslate ? (
         <button className="interactive" onClick={onTranslateClicked}>
           🌐
