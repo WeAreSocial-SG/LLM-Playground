@@ -24,7 +24,6 @@ export default function ChatLog(props: { isMine: boolean; message: string }) {
   };
 
   const onSpeakerClicked = async ()=>{
-    console.log("ddd")
     setAudioLoading(true)
     const res = await API.getAudioUrl(props.message);
     const audioPlayer = new Audio(res);
